@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Register · PocketSmart AI{% endblock %}
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <span class="eyebrow">CREATE ACCOUNT</span>
+        <h1>Start planning smarter</h1>
+        <p class="muted">Save recommendations and revisit them from your dashboard.</p>
+
+        <form id="registerForm" class="stack-form">
+            <label>Name<input type="text" name="name" placeholder="Your name" minlength="2" maxlength="80" required></label>
+            <label>Email<input type="email" name="email" placeholder="you@example.com" required></label>
+            <label>Password<input type="password" name="password" placeholder="At least 6 characters" minlength="6" maxlength="128" required></label>
+            <button class="btn btn-primary" type="submit">Create Account</button>
+            <div id="authMessage" class="form-message"></div>
+        </form>
+
+        <p class="auth-bottom">Already registered? <a href="/login">Login</a></p>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>setupAuthForm("registerForm", "/api/auth/register");</script>
+{% endblock %}

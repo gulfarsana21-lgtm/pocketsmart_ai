@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Recommendations · PocketSmart AI{% endblock %}
+{% block content %}
+<section class="page-heading">
+    <span class="eyebrow">{{ result.planner|upper }} RECOMMENDATION</span>
+    <h1>{{ result.title }}</h1>
+    <p>{{ result.summary }}</p>
+</section>
+
+<section class="result-toolbar">
+    <span class="tag">{% if result.ai_generated %}Gemini AI{% else %}Fallback mode{% endif %}</span>
+    <div class="button-row">
+        <a class="btn btn-secondary" href="/history">History</a>
+        <a class="btn btn-primary" href="/planner/{{ planner }}">New plan</a>
+    </div>
+</section>
+
+<section class="stats-grid">
+    <div class="stat-card"><span>Total Budget</span><strong>₹{{ "%.0f"|format(result.budget) }}</strong></div>
+    <div class="stat-card"><span>Suggestions</span><strong>{{ result.recommendations|length }}</strong></div>
+    <div class="stat-card"><span>Planner</span><strong>{{ result.planner|capitalize }}</strong></div>
+    <div class="stat-card"><span>Saved ID</span><strong>#{{ history_id }}</strong></div>
+</section>
+
+<section class="section">
+    <div class="section-heading"><span class="eyebrow">BUDGET ALLOCATION</span><h2>Where the budget goes</h2></div>
+    <div class="card-grid four">
+        {% for category, amount in result.allocation.items() %}
+        <div class="allocation-card"><span>{{ category }}</span><strong>₹{{ "%.0f"|format(amount) }}</strong></div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading"><span class="eyebrow">RECOMMENDATIONS</span><h2>Suggested options</h2></div>
+    <div class="card-grid three">
+        {% for item in result.recommendations %}
+        <article class="recommend-card">
+            <div class="history-top"><span class="tag">{{ item.category }}</span><span class="muted">{{ item.platform }}</span></div>
+            <h3>{{ item.name }}</h3>
+            <div class="price">₹{{ "%.0f"|format(item.estimated_price) }}</div>
+            <p>{{ item.reason }}</p>
+            <a class="btn btn-secondary small" href="{{ item.search_url }}" target="_blank" rel="noopener noreferrer">Search option ↗</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-heading"><span class="eyebrow">SMART TIPS</span><h2>Before you buy or book</h2></div>
+    <div class="tip-card">
+        <ul>{% for tip in result.tips %}<li>{{ tip }}</li>{% endfor %}</ul>
+        <div class="notice">{{ result.disclaimer }}</div>
+    </div>
+</section>
+{% endblock %}

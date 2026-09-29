@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Login · PocketSmart AI{% endblock %}
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <span class="eyebrow">WELCOME BACK</span>
+        <h1>Sign in to PocketSmart AI</h1>
+        <p class="muted">Access your dashboard and saved recommendation plans.</p>
+
+        <form id="loginForm" class="stack-form">
+            <label>Email<input type="email" name="email" placeholder="you@example.com" required></label>
+            <label>Password<input type="password" name="password" placeholder="Your password" required></label>
+            <button class="btn btn-primary" type="submit">Login</button>
+            <div id="authMessage" class="form-message"></div>
+        </form>
+
+        <p class="auth-bottom">Don't have an account? <a href="/register">Create one</a></p>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>setupAuthForm("loginForm", "/api/auth/login");</script>
+{% endblock %}
